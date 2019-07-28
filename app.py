@@ -30,7 +30,7 @@ def scrape():
     # Update the Mongo database using update and upsert=True
     mongo.db.collection.update({}, mars_data, upsert=True)
 
-    return redirect("/", code=302)
+    return render_template('scrape.html')
 
 
 if __name__ == "__main__":
