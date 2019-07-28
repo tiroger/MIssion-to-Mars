@@ -77,10 +77,11 @@ def scrape():
 
     mars_facts = table[0]
     mars_only_table = mars_facts.drop(columns={'Earth'})
-    renamed_mars_only_table = mars_facts.rename(columns={'Mars - Earth Comparison': 'Property', 'Mars': 'Value'})
-    renamed_mars_only_table.set_index('Property', inplace=True)
+    renamed_mars_only_table = mars_only_table.rename(
+        columns={'Mars - Earth Comparison': 'Property', 'Mars': 'Value'})
+    final_mars_facts = renamed_mars_only_table.set_index('Property')
 
-    mars_facts_html = renamed_mars_only_table.to_html(header=False, index=False)
+    mars_facts_html = final_mars_facts.to_html(header=True, index=True)
     mars_data["fact_table"] = mars_facts_html
 
     # scrape images of Mars' hemispheres from the USGS site
@@ -97,7 +98,7 @@ def scrape():
     # Creating list for hemisphere urls
     hemisphere_image_urls = []
 
-    # Store the main_ul
+    # Store the main_url
     hemispheres_main_url = 'https://astrogeology.usgs.gov'
 
     # Loop through the items previously stored
